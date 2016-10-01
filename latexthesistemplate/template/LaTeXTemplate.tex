@@ -1,6 +1,6 @@
 % !TeX encoding=utf8
 % !TeX program = pdflatex
-% !TeX spellcheck = en-US
+% !TeX spellcheck = de-DE
 % !BIB = biber
 
 %% Bug fixes and other packages to be loaded before the class
@@ -16,11 +16,11 @@
    paper=portrait, % landscape
    pagesize=auto, % driver
 %%% --- Base Font Size ---
-   fontsize=11pt,%
+   fontsize=12pt,%
 %%% --- Koma Script Version ---
    version=last, %
 %%% --- Global Package Options ---
-   english, % language (passed to babel and other packages)
+   ngerman % language (passed to babel and other packages)
             % (ngerman, english, french, ...)
 ]{scrbook} % Classes: scrartcl, scrreprt, scrbook
 
@@ -54,6 +54,9 @@
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % preamble
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% CUSTOM BEGIN
+\input{LaTeXTemplate_custom_begin_preamble.tex}
+% CUSTOM END
 
 %% select/load fonts
 \input{fonts/fonts.tex}
@@ -62,6 +65,9 @@
 \input{preamble/packages.tex}
 %% apply style settings
 \input{preamble/style.tex}
+% CUSTOM START
+\input{preamble/style-custom.tex}
+% CUSTOM END
 %% new commands / definitions (required by the template!)
 \input{preamble/commands.tex}
 
@@ -118,10 +124,13 @@
 %%% bibtex file(s)
 % add multiple files with comma separation
 % biblatex requires files before document
+% custom begin
+% these files MUST NOT be empty, i.e., they must always contain at least 1 entry
+% custom end
 \IfPackageLoaded{biblatex}{
   % add all .bib files:
   \addbibresource{bib/BibtexDatabase.bib}
-  \addbibresource{bib/publications.bib}
+  %\addbibresource{bib/publications.bib}
   % \addbibresource{bib/BibtexData-anytopic.bib}
 }% end: biblatex
 
@@ -131,10 +140,14 @@
 % glossary, acronym, symoblist and such
 \input{content/Z-GlossaryEntries.tex}
 
+% CUSTOM BEGIN
+\input{LaTeXTemplate_custom_before_document.tex}
+% CUSTOM END
+
 %% document content %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\includeonly{
-% content/0-title,
+% content/Title,
 % content/0-Abstract,
 % content/0-Introduction,
 % content/1-Theory,
@@ -152,8 +165,22 @@
 \pagestyle{empty}
 
 % -- title page --
-\include{content/0-title}
+\include{content/Title}
 \cleardoublepage
+
+% CUSTOM BEGIN
+% Must be reloaded here, probably because style.tex (includes style-srcpage2.tex) is included before geometry package. Hence 
+% the style did not consider the changes by geometry.
+% Ensures correct sizes for the header and footer.
+\input{preamble/style-scrpage2.tex}
+
+%\frontmatter % TODO: enable?
+\pagestyle{plain}
+\renewcommand*{\chapterpagestyle}{plain}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+% CUSTOM END
 
 % -- abstract --
 % (only in phd thesis)
@@ -163,20 +190,24 @@
 % (only in bachelor/master thesis)
 \input{content/Z-Declaration.tex}
 
-\frontmatter
-\IfPackageLoaded{scrpage2}{\pagestyle{scrheadings}}
+\frontmatter % TODO: disable?
+\IfPackageLoaded{scrpage2}{\pagestyle{scrheadings}} % TODO: Remove??
 
 % -- table of contents --
 %
 % add table of contents to pdf bookmarks
-\IfPackageLoaded{hyperref}{\pdfbookmark[1]{\contentsname}{toc}}
+\IfPackageLoaded{hyperref}{\pdfbookmark[1]{\contentsname}{toc}} % TODO: Remove??
 \tableofcontents
 
 \IfPackagesLoaded{glossaries,longtable,tabu}{%
   \clearpage
   % print out acronym list   
   \IfGlossariesStyleDefined{longtabuFancyHeader}%
-   {\printglossary[type=\acronymtype,style=longtabuFancyHeader]}%
+   {
+       % CUSTOM BEGIN
+       \markboth{Abkürzungsverzeichnis}{Abkürzungsverzeichnis}
+       % CUSTOM END
+   	\printglossary[type=\acronymtype,style=longtabuFancyHeader]}%
   % print out symbol list 
   \IfGlossariesStyleDefined{longtabuFancyHeader}%
    {\printglossary[type=symbolslist,style=longtabuFancyHeader]}%
@@ -186,6 +217,13 @@
 
 % --- Main Document --- --- --- --- --- --- ---
 \mainmatter
+
+% CUSTOM BEGIN, disable citations, footnotes and other page styling to open the file in another program for spell checking
+%\pagestyle{scrplain}
+%\renewcommand{\footnote}{}
+%\DeclareDocumentCommand{\cite}{ O{} O{} m }{}
+% CUSTOM END
+
 %
 % (files loaded with include must not have the prefix .tex)
 %
@@ -198,12 +236,19 @@
 %%% -- end of main content
 
 % -- bibliography --
+% custom begin
+
+% BibLaTex distinguishes between different section, everything outside of a refsection environment belongs to the default section 0, the other sections are numbered beginning from 1. This is used to split up the sources for the usual bibliography and the code sources. The usual bibliography is placed outside any refsection and code sources inside. \printbibliography gets the appropriate section= parameter.
+% custom end
+
 % (must be placed _before_ appendix)
 \IfPackageLoaded{biblatex}{
   \cleardoublepage
   \IfDefined{phantomsection}{\phantomsection}\label{sec:bibliography}
   \printbibliography[%
     heading=bibintoc, % (bibintoc, bibnumbered)
+    section=0,
+    title=Quellenverzeichnis
   ]	
 }% end of bibliography
 
@@ -220,14 +265,18 @@
 % --- Appendix --- --- --- --- --- --- ---
 \cleardoublepage\IfDefined{phantomsection}{\phantomsection}
 \appendix
+% CUSTOM BEGIN
+% If the appendix has only virtual entries (added via addcontentsline), try the solution with BeforeClosingMainAux in 
+% LaTeXTemplate_custom_before_document.tex instead.
+% CUSTOM END
 % Add `Appendix` to TOC
 \addcontentsline{toc}{part}{\appendixname}
 % must be _input_, otherwise the TOC entry is at the wrong place
 \input{content/Z-Appendix.tex}
 
 % -- only in phd thesis --->
-\input{content/Z-Publications.tex}
-\input{content/Z-CV.tex}
+%\input{content/Z-Publications.tex}
+%\input{content/Z-CV.tex}
 % <------------------------
 
 %% -- Index --
@@ -238,7 +287,7 @@
   \printindex%
 }% end of index
 
-\input{content/Z-Thanks.tex}
+%\input{content/Z-Thanks.tex}
 
 % add todo list (remove for final document!)
 % \input{content/Z-Todo.tex}

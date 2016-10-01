@@ -1,0 +1,85 @@
+==== Software ====
+- Windows 10 (x64)
+- TeXworks
+- texlive2016-20160523.iso
+	- nach Installation alle Pakete aktualisieren
+	
+- eigene Skripte
+	- DeleteAuxFiles.bat
+	- Build.bat
+
+==== TeXworks ====
+- Verarbeitungsprogramme hinzufügen: wie unter "Kompilation" beschrieben Biber und MakeGlossaries hinzufügen
+	- die Variablen werden von TeXworks bereitgestellt
+
+==== Kompilation ====
+Die im Folgenden verwendeten Variablen wie folgt ersetzen:
+        - $basename=LaTeXTemplate
+        - $fullname=LaTeXTemplate.tex
+
+0. auf der Kommandozeile in das Verzeichnis "LaTeX_Ausarbeitung" wechseln
+1. pdflatex $fullname 
+        - findet im Dokument verwendete Quellen und Abkürzungen und speichert 
+        sie in Dateien, die als Eingabe für die nächsten Schritte dienen 
+2. biber $basename
+        - ermittelt Angaben für das Quellenverzeichnis 
+3. makeglossaries $basename
+        - ermittelt Angaben für das Abkürzungsverzeichnis 
+4. pdflatex $fullname
+        - erzeugt vollständiges Dokument mit Quellen- und Abkürzungsverzeichnis
+5. pdflatex $fullname
+        - aktualisiert u. a. Inhaltsverzeichnis aufgrund der 
+        Änderungen im vorigen Schritt	
+
+==== Nutzung ====
+!!! .gitignore zum Ausschließen von geschützten/geheimen Inhalten (Unterschrift, ...) !!!
+
+Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus der Vorlage sind optional:
+	- 
+
+# fester Eintrag im TOC ohne Seitenzahl
+\addcontentslineWithoutPagenumber{chapter}{Titel, der im TOC erscheint}		
+	
+#
+
+	
+==== TODO ====
+- Reihenfolge Vor- und Nachname im Quellenverzeichnis
+- anderer Editor?
+- Vergleich mit anderen Hausarbeiten
+	- Anhänge
+- Spezifisches von letzter Hausarbeit entfernen	
+- evtl \usepackage{courier} in fonts.tex ergänzen
+- Variable für Datum?
+
+=====
+Funktioniert das Auslagern der Einstellungen in eigene Datei in allen Fällen?
+	- Bleiben die nicht-überschriebenen Einstellungen erhalten?
+Warum unused-style-titlesec.tex?
+aus style-titlesec.tex
+	\renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
+			- oder in LaTeXTemplate.tex??
+	\titlespacing*{\chapter}{0pt}{0pt}{1em}
+unused-bibliographiestyle.tex?
+style-biblatex.tex
+	- evtl. babel=none ergänzen
+packages.tex
+	- evtl. bibstyle=numeric-comp, bei biblatex ergänzen
+	- evtl. hyperfirst=false bei glossaries setzen
+	- \usepackage{fancybox}
+	- \usepackage{titlesec}
+style.tex
+	- bibliography=oldstyle
+	- \KOMAoptions ... twoside = false
+	- headings=nochapterprefix
+	- \input{preamble/style-titlesec.tex} ?
+	- toc=nolistof, toc=bib, ...
+	- \usetocstyle{standard}
+	- listof=totoc
+	- listof=chaptergapsmall
+LaTeXTemplate.tex
+	- scrreprt als documentclass
+	- prüfen, ob "these files MUST NOT be empty" stimmt
+	- titlespacing in before document
+	- Anhang mit ausschließlich virtuellen Einträgen
+	

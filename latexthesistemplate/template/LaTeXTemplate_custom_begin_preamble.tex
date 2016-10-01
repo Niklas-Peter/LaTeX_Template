@@ -1,0 +1,11 @@
+\usepackage{geometry}
+
+% custom begin
+% saves the original \contentsline, because it will be overriden by any package, but the original is needed for \addcontentslineWithoutPagenumber
+\newcommand*\originalContentsline{}
+\let\originalContentsline\contentsline
+\PassOptionsToPackage{hyphens}{url}
+% custom end
+
+\renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
+\renewcommand*{\chapterheadendvskip}{\vspace{0cm}}
