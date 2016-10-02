@@ -1,12 +1,13 @@
-\geometry{%
+\IfPackageLoaded{geometry}{\geometry{%
 	lines=45, 		% enables users to specify \textheight by the number of lines.
-	ignoreall,		% sets both ignoreheadfoot and ignoremp to true
+	%ignoreall,		% sets both ignoreheadfoot and ignoremp to true
 	left=2.5cm,        	% left margin (for oneside) or inner margin (for twoside) of total body
                   			% alias: lmargin, inner
 	right=2cm,       	% right or outer margin of total body
                   			% alias: rmargin outer
 	top=2.5cm,         % top margin of the page.
-	bottom=2.5cm,   	% bottom margin of the page
 	twoside=false,	% only 1 page per sheet
-	nomarginpar  % shrinks spaces for marginal notes to 0pt
-}
+	nomarginpar,  % shrinks spaces for marginal notes to 0pt,
+       footskip = \dimexpr\headsep+\ht\strutbox\relax, 
+       bottom = \dimexpr15mm+2\ht\strutbox\relax   % bottom margin of the page
+}}

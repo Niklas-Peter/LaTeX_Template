@@ -3,4 +3,12 @@
    \setheadsepline[\textwidth]{.4pt}[\color{black}] 	% configures the line below the header
 }
 
-\renewcommand*{\chapterpagestyle}{scrheadings} 	% set chapter pages with heading (or other) style
+% OVERWRITES BEGIN: style-scrpage2.tex
+% What is printed where ...
+\IfElseDefined{chapter}{
+   \ohead{} 						% header outside: nothing
+   \ofoot[\pagemark]{\pagemark} 	% footer: page number
+} {}
+
+\renewcommand*{\chapterpagestyle}{plain} 	% set chapter pages with heading (or other) style
+% OVERWRITES END

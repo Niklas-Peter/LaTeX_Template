@@ -124,13 +124,9 @@
 %%% bibtex file(s)
 % add multiple files with comma separation
 % biblatex requires files before document
-% custom begin
-% these files MUST NOT be empty, i.e., they must always contain at least 1 entry
-% custom end
 \IfPackageLoaded{biblatex}{
   % add all .bib files:
   \addbibresource{bib/BibtexDatabase.bib}
-  %\addbibresource{bib/publications.bib}
   % \addbibresource{bib/BibtexData-anytopic.bib}
 }% end: biblatex
 
@@ -169,15 +165,6 @@
 \cleardoublepage
 
 % CUSTOM BEGIN
-% Must be reloaded here, probably because style.tex (includes style-srcpage2.tex) is included before geometry package. Hence 
-% the style did not consider the changes by geometry.
-% Ensures correct sizes for the header and footer.
-\input{preamble/style-scrpage2.tex}
-
-%\frontmatter % TODO: enable?
-\pagestyle{plain}
-\renewcommand*{\chapterpagestyle}{plain}
-
 \pagenumbering{roman}
 \setcounter{page}{1}
 % CUSTOM END
@@ -190,38 +177,23 @@
 % (only in bachelor/master thesis)
 \input{content/Z-Declaration.tex}
 
-\frontmatter % TODO: disable?
-\IfPackageLoaded{scrpage2}{\pagestyle{scrheadings}} % TODO: Remove??
+\frontmatter
+\IfPackageLoaded{scrpage2}{\pagestyle{scrheadings}}
 
 % -- table of contents --
 %
 % add table of contents to pdf bookmarks
-\IfPackageLoaded{hyperref}{\pdfbookmark[1]{\contentsname}{toc}} % TODO: Remove??
+\IfPackageLoaded{hyperref}{\pdfbookmark[1]{\contentsname}{toc}}
+% CUSTOM BEGIN
+\setcounter{tocdepth}{2}
+% CUSTOM END
 \tableofcontents
-
-\IfPackagesLoaded{glossaries,longtable,tabu}{%
-  \clearpage
-  % print out acronym list   
-  \IfGlossariesStyleDefined{longtabuFancyHeader}%
-   {
-       % CUSTOM BEGIN
-       \markboth{Abkürzungsverzeichnis}{Abkürzungsverzeichnis}
-       % CUSTOM END
-   	\printglossary[type=\acronymtype,style=longtabuFancyHeader]}%
-  % print out symbol list 
-  \IfGlossariesStyleDefined{longtabuFancyHeader}%
-   {\printglossary[type=symbolslist,style=longtabuFancyHeader]}%
-  % print out glossary
-  \printglossary[style=altlist]
-} % end of glossaries
 
 % --- Main Document --- --- --- --- --- --- ---
 \mainmatter
 
 % CUSTOM BEGIN, disable citations, footnotes and other page styling to open the file in another program for spell checking
 %\pagestyle{scrplain}
-%\renewcommand{\footnote}{}
-%\DeclareDocumentCommand{\cite}{ O{} O{} m }{}
 % CUSTOM END
 
 %
@@ -232,6 +204,7 @@
 \include{content/2-Experiments}
 \include{content/3-Results}
 \include{content/4-Summery}
+\include{content/5-Template-Test-Custom}
 
 %%% -- end of main content
 
@@ -251,6 +224,23 @@
     title=Quellenverzeichnis
   ]	
 }% end of bibliography
+% CUSTOM BEGIN: Moved glossaries to end of document
+\IfPackagesLoaded{glossaries,longtable,tabu}{%
+  \clearpage
+  % print out acronym list   
+  \IfGlossariesStyleDefined{longtabuFancyHeader}%
+   {
+       % CUSTOM BEGIN
+       \markboth{Abkürzungsverzeichnis}{Abkürzungsverzeichnis} % title for header
+       % CUSTOM END
+   	\printglossary[type=\acronymtype,style=longtabuFancyHeader,title=Abkürzungsverzeichnis]}%
+  % print out symbol list 
+  \IfGlossariesStyleDefined{longtabuFancyHeader}%
+   {\printglossary[type=symbolslist,style=longtabuFancyHeader]}%
+  % print out glossary
+  \printglossary[style=altlist]
+} % end of glossaries
+% CUSTOM END
 
 %% -- list of figures and tables --
 \cleardoublepage\IfDefined{phantomsection}{\phantomsection}\label{sec:lof}

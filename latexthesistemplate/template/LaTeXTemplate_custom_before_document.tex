@@ -1,4 +1,8 @@
-% custom begin
+% CUSTOM BEGIN
+
+% Date to print on the document.
+\newcommand{\npHandoverDate}{10.03.2017}
+
 % If you use this command as usual after \appendix it only works only, if there is another "real" appendix, that means an appendix not created using a \addtocontents command.  If there is no real appendix, you must include this command in a \BeforeClosingMainAux (see below)
 % Parameter 1: Type of entry to add, either chapter or part
 % Parameter 2: Name of the entry to add
@@ -29,14 +33,6 @@
 \definecolor{verydarkGray}{rgb}{0.1,0.1,0.1}
 \newcommand\roundInlineBox[2][]{\tikz[overlay]\node[fill=veryLightGray,inner sep=1pt, anchor=text, rectangle, rounded corners=1mm,#1] {#2};\phantom{#2}}
 \newcommand{\inlinecode}[1]{\roundInlineBox{\small\ttfamily\color{verydarkGray}{#1}}}
-% JS for listings
-\definecolor{darkgray}{rgb}{.4,.4,.4}
-\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
-
-%\definecolor{colKeys}{rgb}{0,0,1}
-%\definecolor{colIdentifier}{rgb}{1,0,0}
-%\definecolor{colComments}{rgb}{0,0.7,0.4}
-%\definecolor{colString}{rgb}{0,0.5,0}
 
 % for all languages
 \lstset{
@@ -79,54 +75,35 @@
   \par\noindent
 }
 
-
 % for color schemes, a small box filled with the color and bordered lightgray
  \newcommand{\colorSchemeBox}{\tikz \filldraw [draw=lightgray, semithick] (0.1,0.1) rectangle (0.5,0.5);}
 
-% custom end
-
-
-%\lstset{
-%  language        = php,
-%  keywordstyle    = \color{blue},
-%  stringstyle     = \color{red},
-%  identifierstyle = \color{green},
-%  commentstyle    = \color{gray},
-%  emph            =[1]{php},
-%  emphstyle       =[1]\color{black},
-%  emph            =[2]{if,and,or,else},
-%  emphstyle       =[2]\color{yellow}
-%}
-
-
-% \input{preamble/style-geometry.tex}
 \onehalfspacing
 \usepackage{chngcntr} 
-\counterwithout{footnote}{chapter}
-\usepackage{remreset}
-% CUSTOM BEGIN
+\counterwithout{footnote}{chapter} % Enumerate footnotes across chapter, i.e., do not start with 1 in each chapter
+
 \usepackage{seqsplit}
 \usepackage{ifthen}
-% CUSTOM END
-%CUSTOM BEGIN
 
-\newbibmacro*{textualcite}{%
-  \printtext[bibhyperref]{%
-    \printfield{prefixnumber}%
-    \printfield{labelnumber}%
-    \ifbool{bbx:subentry}
-      {\printfield{entrysetcount}}
-      {}}}
-\DeclareCiteCommand{\textualcite}%[\mkbibbrackets]
-  {\iffieldundef{prenote}%
-    {}%
-    {\usebibmacro{prenote}\addspace}%
-    \bibopenbracket\setunit{}}%
-  {\usebibmacro{citeindex}%
-   \usebibmacro{textualcite}}%
-  {\multicitedelim}%
-  {\bibclosebracket%
-    \usebibmacro{postnote}}
+% Remove the comments, if you want to use a numeric bibstyle. \textualcite[see][42]{key} will produce
+% this cite: see [1], page 42. Other cite commands set the complete citation in brackets: [see 1, page 42].
+%\newbibmacro*{textualcite}{%
+%  \printtext[bibhyperref]{%
+%    \printfield{prefixnumber}%
+%    \printfield{labelnumber}%
+%    \ifbool{bbx:subentry}
+%      {\printfield{entrysetcount}}
+%      {}}}
+%\DeclareCiteCommand{\textualcite}
+%  {\iffieldundef{prenote}%
+%    {}%
+%    {\usebibmacro{prenote}\addspace}%
+%    \bibopenbracket\setunit{}}%
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{textualcite}}%
+%  {\multicitedelim}%
+%  {\bibclosebracket%
+%    \usebibmacro{postnote}}
 
 
 
@@ -147,11 +124,6 @@
 
 \lstset{numbers=left,matchrangestart=t}
 
-% spacing of section, ... titles
-%\titlespacing{\section}{0pt}{*1}{*0.5}
-%\titlespacing{\subsection}{0pt}{*1}{*0.5}
-%\titlespacing{\subsubsection}{0pt}{*1}{*0.5}
-
 % Allows page numbers in \cite commands to contain a "-" (usually the dash would be 
 % interpreted as a page range). E. g.: \citep[12\pnhyph 2]{myCiteId} cites page "12-2"
 \def\pnhyph{-}
@@ -162,14 +134,17 @@
 \setcounter{biburlucpenalty}{8000}
 
 % Uncomment this to compile without citations and listings for spell checking.
-%	\renewcommand{\lstinputlisting}[2][]{}
-%	\renewcommand{\inlinecode}[1]{}
-%	\ifthenelse{\boolean{isSpellCheck}}{\DeclareCiteCommand{\textualcite}{}{Quelle}{}{}}{}
-%	\renewcommand{\Cref}[1]{Abschnitt 1}
-
-%
-
-% Uncomment to set hyperref link color to text color for printing
-%\UseDefinition{Target}{Print}
+%\renewcommand{\lstinputlisting}[2][]{}
+%\renewcommand{\inlinecode}[1]{}
+%\DeclareCiteCommand{\textualcite}{}{Quelle}{}{}
+%\renewcommand{\Cref}[1]{Abschnitt 1}
+%\renewcommand{\footnote}{}
+%\DeclareDocumentCommand{\cite}{ O{} O{} m }{Quelle}
+%\IfElseDefined{chapter}{
+%   \ohead[]{} % header : nothing
+%   \ihead[]{} 
+%   \ofoot[]{} 	% footer: nothing
+%   \setheadsepline{0pt}[] % disables the line below the header
+%} {}
 
 % CUSTOM END

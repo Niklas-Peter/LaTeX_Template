@@ -1,3 +1,24 @@
-\input{preamble/style-biblatex.tex}
+\input{preamble/style-biblatex-custom.tex}
 \input{preamble/style-geometry-custom.tex}
 \input{preamble/style-scrpage2-custom.tex}
+\input{preamble/style-typearea-custom.tex}
+
+% OVERWRITES BEGIN: style.tex
+%%% Remove Space above and below Chapter.
+%% Space above Chapter Title
+\renewcommand*{\chapterheadstartvskip}{\vspace{1\baselineskip}}
+%% Space below Chapter Title
+\renewcommand*{\chapterheadendvskip}{\vspace{0.7\baselineskip}}%
+
+\IfDefined{chapter}{
+   \KOMAoptions{%
+      headings=appendixprefix % chapter in appendix as in body text  
+   }%
+}%
+
+%%% === Appereance of Lists of figures, tables etc.  ===
+\KOMAoptions{%
+   % --- Appearance of Lists in TOC
+   listof=totoc, % add Lists to TOC without number
+}%   
+% OVERWRITES END: style.tex

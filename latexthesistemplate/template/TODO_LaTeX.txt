@@ -40,46 +40,54 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus 
 # fester Eintrag im TOC ohne Seitenzahl
 \addcontentslineWithoutPagenumber{chapter}{Titel, der im TOC erscheint}		
 	
-#
+# Anpassen der Abstände vor/nach Kapitel- und Abschnittsüberschriften
+\RedeclareSectionCommands in style.tex anpassen
 
+# numerischer Zitatstil
+- in packages.tex: style=numeric-comp bei biblatex
+- für eckige Klammern im Quellenverzeichnis: vor begin{document}: \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
+- vor begin{document} die Kommentare für den Code von \textualcite entfernen
+- Einträge im Quellenverzeichnis nicht sortieren (=> Reihenfolge des Vorkommens im Text wird erhalten): sort=none
+
+
+# Druck
+- Unterschrift entfernen
+- Linkfarbe: in LaTeXTemplate.tex
+		- \UseDefinition{Target}{Print} statt\UseDefinition{Target}{Web}
+
+# Hinweise
+- titlesec wird in der neuen Version nicht mehr benutzt
 	
 ==== TODO ====
-- Reihenfolge Vor- und Nachname im Quellenverzeichnis
 - anderer Editor?
+	- Rechtschreibprüfung?
 - Vergleich mit anderen Hausarbeiten
 	- Anhänge
 - Spezifisches von letzter Hausarbeit entfernen	
-- evtl \usepackage{courier} in fonts.tex ergänzen
-- Variable für Datum?
+- Template-Doku lesen
+- Tests erweitern für eigene Befehle
+- Snippets für verschiedene Aufgaben
 
-=====
+# Funktionen
+- Anhang mit ausschließlich virtuellen Einträgen
+- Umschalten zwischen Zitatbefehlen => eigenen Befehl erstellen, der abhängig von Variable \textualcite oder \cite nutzt
+	- Code für Rechtschreibprüfung beachten
+- vertikale Abstände, die momentan zum Füllen der Seite benutzt werden, entfernen
+	(Problemt tritt v.a. in der Nähe von Bildern auf)
+- Zeilenumbrüche in \inlinecode ermöglichen
+- Fußnote in captionof
+- Querformat (insb. für Bilder), 2 Varianten:
+	- für Bildschirmanzeige: Seite komplett im Querformat
+	- für den Druck / zum Binden: nur das Bild im Querformat, aber Seitenlayout weiterhin Hochformat
+
 Funktioniert das Auslagern der Einstellungen in eigene Datei in allen Fällen?
 	- Bleiben die nicht-überschriebenen Einstellungen erhalten?
-Warum unused-style-titlesec.tex?
-aus style-titlesec.tex
-	\renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
-			- oder in LaTeXTemplate.tex??
-	\titlespacing*{\chapter}{0pt}{0pt}{1em}
-unused-bibliographiestyle.tex?
-style-biblatex.tex
-	- evtl. babel=none ergänzen
-packages.tex
-	- evtl. bibstyle=numeric-comp, bei biblatex ergänzen
-	- evtl. hyperfirst=false bei glossaries setzen
-	- \usepackage{fancybox}
-	- \usepackage{titlesec}
+
+==== nicht aus alter Vorlage übernommen ====	
 style.tex
 	- bibliography=oldstyle
-	- \KOMAoptions ... twoside = false
-	- headings=nochapterprefix
-	- \input{preamble/style-titlesec.tex} ?
-	- toc=nolistof, toc=bib, ...
 	- \usetocstyle{standard}
-	- listof=totoc
-	- listof=chaptergapsmall
 LaTeXTemplate.tex
 	- scrreprt als documentclass
-	- prüfen, ob "these files MUST NOT be empty" stimmt
-	- titlespacing in before document
-	- Anhang mit ausschließlich virtuellen Einträgen
+\addtocontents{toc}{\protect\thispagestyle{empty}} auf 1. Seite des Hauptteils	
 	
