@@ -1,0 +1,30 @@
+% Source: http://tex.stackexchange.com/a/341192/61241
+
+% Wraps the complete text in \inlinecodeNoWrap to the next line if it does not fit in the current line.
+% Round corners, but no borders.
+
+%\usepackage{tikz}
+
+% NOTE: If it does not work as expected you may uncomment the lines below and 
+% try to wrap the code using \inlinecodeNoWrap in the InlineCodeNoWrap environment. 
+% Example: 
+% \begin{InlineCodeNoWrap}
+% 		\inlinecodeNoWrap{MyCode}
+% \end{InlineCodeNoWrap}
+
+%\newenvironment{InlineCodeNoWrap}
+%{\par
+%\hyphenpenalty=10000
+%\exhyphenpenalty=10000
+%}
+%{\par}
+
+\newcommand\lword[1]{\leavevmode\nobreak\hskip0pt plus\linewidth\penalty50\hskip0pt plus-\linewidth\nobreak #1}
+
+\definecolor{veryLightGray}{rgb}{0.9,0.9,0.9}
+
+\newcommand\roundInlineBox[2][]{\tikz[overlay]% Comment to prevent whitespace.
+\node[fill=veryLightGray,inner sep=1pt, anchor=text, rectangle, rounded corners=1mm,#1] {#2};% Comment to prevent whitespace.
+\phantom{#2}}
+
+\newcommand{\inlinecodeNoWrap}[1]{\lword{\roundInlineBox{\small\ttfamily{#1}}}}

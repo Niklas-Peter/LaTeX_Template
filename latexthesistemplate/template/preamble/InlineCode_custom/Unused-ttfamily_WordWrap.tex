@@ -1,0 +1,34 @@
+% Source: http://tex.stackexchange.com/questions/171278/wordbreaking-justification-and-ttfamily
+
+% NOTE: Does not work reliably. 
+% If you ever fix it, make sure that these settings do not destroy
+% the formatting of other commands which use \ttfamily, e.g., 
+% the listings package.
+
+% Allow a varying interword space in the \ttfamily, because
+% usually a mono type font is expected to have the same spacing
+% between all characters. However, allowing varying spaces
+% is required for making hyphenation in \inlinecode work. 
+
+% Determines, how much the spacing between words may be 
+% stretched.
+\setlength{\emergencystretch}{3em} 
+
+\usepackage{letltxmacro}
+\LetLtxMacro\origttfamily\ttfamily
+\DeclareRobustCommand*{\ttfamily}{%
+  \origttfamily
+  \hyphenchar\font= -1\relax
+  \fontdimen3\font=.25em\relax
+  \fontdimen4\font=.167em\relax
+  \fontdimen7\font=.167em\relax
+}
+
+\makeatletter
+\DeclareRobustCommand\vttfamily{%
+  \not@math@alphabet\vttfamily\relax
+  \fontfamily{lmvtt}% cmvtt (Computer Modern) or lmvtt (Latin Modern)
+  \selectfont
+}
+\DeclareTextFontCommand{\textvtt}{\vttfamily}
+\makeatother

@@ -1,12 +1,20 @@
-\section{\glsInHeadline{OpenCL}}
-In diesem Text wird der Code \inlinecode{var files = Directory.EnumerateFiles(myDirectory, ''*.txt*);} hervorgehoben.
+\section{Glossary entry \glsAsPartOfHeadline{OpenCL} is surrounded by other words in the headline}
+In diesem Text wird der Code \inlinecodeNoWrap{var files = Directory.EnumerateFiles(myDirectory, ''*.txt*);} mit langem Wort hervorgehoben und hier noch der Code mit weniger langen Wörtern \inlinecodeWrap{var files = (myVar == true) ? DoThis() : DoThat()}
 
 \ifdef{\textualcite}{
-	{\textbackslash}textualcite ohne Seitenangabe: \textualcite[vgl.][]{companion} \\
-	{\textbackslash}textualcite mit Seitenangabe: \textualcite[vgl.][60]{companion}
+	{\textbackslash}textualcite ohne Seitenangabe: \textualcite[vgl.][]{martin2009clean} \\
+	{\textbackslash}textualcite mit Seitenangabe: \textualcite[vgl.][60]{martin2009clean}
 }
 {{\textbackslash}textualcite ist nicht aktiviert.} % else part
 
-{\textbackslash}cite: \cite[vgl.][59]{companion}
+%{\textbackslash}cite: \cite[vgl.][59]{companion}
+
+MyCite: \MyCite[vgl.][59]{martin2009clean}
 
 Akronym: \gls{OpenCL}
+
+Hyphenation: Very long words Pfefferminzkaugummieinwickelpapier Pfefferminzkaugummieinwickelpapier
+
+\section{\glsOnlyHeadline{OpenCL}}
+
+	{\textbackslash}textualcite mit Seitenangabe: \textualcite[vgl.][60]{martin2009clean}

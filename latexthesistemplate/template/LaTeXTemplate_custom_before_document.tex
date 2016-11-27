@@ -28,11 +28,9 @@
 %}
 
 \usepackage{blindtext}
-% for code inside the text
-\definecolor{veryLightGray}{rgb}{0.9,0.9,0.9}
-\definecolor{verydarkGray}{rgb}{0.1,0.1,0.1}
-\newcommand\roundInlineBox[2][]{\tikz[overlay]\node[fill=veryLightGray,inner sep=1pt, anchor=text, rectangle, rounded corners=1mm,#1] {#2};\phantom{#2}}
-\newcommand{\inlinecode}[1]{\roundInlineBox{\small\ttfamily\color{verydarkGray}{#1}}}
+
+\input{preamble/InlineCode_custom/InlineCode_AutoWrap_Rounded_OptionalBorders}
+\input{preamble/InlineCode_custom/InlineCode_NoWrap_Rounded}
 
 % for all languages
 \lstset{
@@ -64,7 +62,23 @@
 % emphasize first acronym occurence
 \defglsdisplayfirst[acronym]{\emph{#1#4}}
 
-\newcommand{\glsInHeadline}[1]{% do NOT remove this comment, it prevents a leading whitespace
+% You should not use \gls{} in headlines created with \chapter, \section, ...
+% because it will only be formatted correctly in the TOC entry, but not in the actual headline
+% and if you use back references from the list of acronyms to the pages referring to this gls entry
+% the TOC page would falsely be listed for an gls entry used in a headline.
+%
+% Consider that these commands always print the full gls entry and do not increment
+% the first occurence counter.
+
+% Format a gls entry in a headline as if it was in the flow text, but
+% avoid the disadvantages when using \gls{} in a headline.
+\let\glsAsPartOfHeadline\glsentryfull
+
+% The command \glsOnlyHeadline will apply a dedicated formatting for gls
+% and should be used in headlines, which only contain the gls entry, that means,
+% no text surrounding the gls entry. 
+% Example: \section{\gls{KEY}}, but NOT \section{Some text before the \gls{KEY} and some text after it}
+\newcommand{\glsOnlyHeadline}[1]{% do NOT remove this comment, it prevents a leading whitespace
 	\glsentryshort{#1} \textendash {} \glsentrylong{#1}
 }
 
@@ -85,27 +99,39 @@
 \usepackage{seqsplit}
 \usepackage{ifthen}
 
-% Remove the comments, if you want to use a numeric bibstyle. \textualcite[see][42]{key} will produce
+% Remove the comments, if you want to use a numeric bibstyle. 
+% NOTE: You have to load biblatex like this: usepackage[style=numeric-comp]{biblatex}
+% \textualcite[see][42]{key} will produce
 % this cite: see [1], page 42. Other cite commands set the complete citation in brackets: [see 1, page 42].
-%\newbibmacro*{textualcite}{%
-%  \printtext[bibhyperref]{%
-%    \printfield{prefixnumber}%
-%    \printfield{labelnumber}%
-%    \ifbool{bbx:subentry}
-%      {\printfield{entrysetcount}}
-%      {}}}
-%\DeclareCiteCommand{\textualcite}
-%  {\iffieldundef{prenote}%
-%    {}%
-%    {\usebibmacro{prenote}\addspace}%
-%    \bibopenbracket\setunit{}}%
-%  {\usebibmacro{citeindex}%
-%   \usebibmacro{textualcite}}%
-%  {\multicitedelim}%
-%  {\bibclosebracket%
-%    \usebibmacro{postnote}}
+\newbibmacro*{textualcite}{%
+  \printtext[bibhyperref]{%
+    \printfield{prefixnumber}%
+    \printfield{labelnumber}%
+    \ifbool{bbx:subentry}
+      {\printfield{entrysetcount}}{}% Do not remove this comment to prevent unwanted whitespace.
+}}
+\DeclareCiteCommand{\textualcite}
+  {\iffieldundef{prenote}%
+    {}%
+    {\usebibmacro{prenote}\addspace}%
+    \bibopenbracket\setunit{}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{textualcite}}%
+  {\multicitedelim}%
+  {\bibclosebracket%
+    \usebibmacro{postnote}}
 
-
+% Custom cite command to allow easy switching between, e.g., \textualcite and \cite
+% If you use a cite command different from \textualcite you might have to change 
+% the loading of biblatex like this: usepackage[style=alphabetic]{biblatex}
+\DeclareDocumentCommand{\MyCite}{ O{default1} O{default2} m }{
+\ifdef{\textualcite}{
+	\textualcite[#1][#2]{#3}
+}
+{
+	\cite[#1][#2]{#3}
+}
+}
 
 % Makes sure, that the line number in lstinputlisting shows the line numbers corresponding to the whole file, even if you just print a part of the file. See http://tex.stackexchange.com/a/110195/61241
 \makeatletter
@@ -133,10 +159,12 @@
 \setcounter{biburllcpenalty}{7000}
 \setcounter{biburlucpenalty}{8000}
 
-% Uncomment this to compile without citations and listings for spell checking.
+% Uncomment this to compile without justification, hyphenation, citations and listings for spell checking.
 %\renewcommand{\lstinputlisting}[2][]{}
-%\renewcommand{\inlinecode}[1]{}
+%\renewcommand{\inlinecodeWrap}[1]{}
+%\renewcommand{\inlinecodeNoWrap}[1]{}
 %\DeclareCiteCommand{\textualcite}{}{Quelle}{}{}
+%\DeclareDocumentCommand{\MyCite}{ O{default1} O{default2} m }{Quelle}
 %\renewcommand{\Cref}[1]{Abschnitt 1}
 %\renewcommand{\footnote}{}
 %\DeclareDocumentCommand{\cite}{ O{} O{} m }{Quelle}
@@ -146,5 +174,10 @@
 %   \ofoot[]{} 	% footer: nothing
 %   \setheadsepline{0pt}[] % disables the line below the header
 %} {}
-
+% disable hyphenation
+%\tolerance=1
+%\emergencystretch=\maxdimen
+%\hyphenpenalty=10000
+%\hbadness=10000
+%\raggedright % set left aligned instead of justified
 % CUSTOM END
