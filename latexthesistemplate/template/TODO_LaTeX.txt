@@ -67,16 +67,26 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus 
 - \input{content/Z-Appendix.tex} in LaTeXTemplate.tex deaktivieren
 - virtuelle Einträge in content/Z-Appendix.tex festlegen
 
+# Fußnote in caption/captionof
+- möglichst vermeiden
+- fehleranfällige Lösung, weil sichergestellt werden muss, dass sich 
+  \footnotetext auf derselben Seite wie caption/captionof befinden muss
+\begin{tabu} ... \end{tabu}
+\captionof{table}{My footnote\footnotemark is here. }
+\footnotetext{Content of footnote}
+
+- alternative Lösungen: http://tex.stackexchange.com/questions/29916/how-to-place-a-footnote-inside-a-float-environment
+
 ==== TODO ====
 - Template-Doku lesen
 - Tests erweitern für eigene Befehle
 - Visio Rahmen um PDF entfernen
 
 # Funktionen
-- Fußnote in captionof
 - Querformat (insb. für Bilder), 2 Varianten:
 	- für Bildschirmanzeige: Seite komplett im Querformat
 	- für den Druck / zum Binden: nur das Bild im Querformat, aber Seitenlayout weiterhin Hochformat
+- Befehle & Snippets zum Einbinden von Bildern, Tabellen, ... anlegen
 
 # 
 - anderer Editor?
@@ -90,12 +100,14 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus 
 	- Anhänge
 - für Bachelorarbeit
 	- Deckblatt: Erst- und Zweitgutachter
-(- Abstand Beschriftung von Tabelle, Bild, ... erhöhen)
+	
+# Nice-to-have
 - alphabetischer Zitatstil
 	- Problem: kein Jahr und/oder Autor vorhanden
 	- Präfix vor die eckigen Klammern
-(- zuverlässiger Zeilenumbruch in \ttfamily)
-- inlinecode Verbesserungen, siehe: http://tex.stackexchange.com/questions/341163/colored-background-with-rounded-corners-for-a-text-fragment-preventing-an-overfl/341195#comment837153_341195
+- zuverlässiger Zeilenumbruch in \ttfamily
+- inlinecodeWrap verbessern: Im Falle eines Zeilenumbruchs Pfeil-Symbol (\hookarrowleft) als hyphenchar anzeigen,
+  das Umbruch symbolisiert. 
 - Konfigurationsdatei: Variablen setzen, die in den anderen Dateien
 abgefragt werden, z. B.: MyCite=numeric oder Appendix=VirtualOnly
 	

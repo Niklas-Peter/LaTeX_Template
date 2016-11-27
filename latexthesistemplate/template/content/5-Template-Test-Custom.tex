@@ -15,6 +15,23 @@ Akronym: \gls{OpenCL}
 
 Hyphenation: Very long words Pfefferminzkaugummieinwickelpapier Pfefferminzkaugummieinwickelpapier
 
+Footnote outside caption: footnote\footnote{Footnote outside}
+
+Footnote in captionof:
+% tabu
+\begin{tabu} to \textwidth {l}
+\hline
+\rowfont[l]{\bfseries}
+\taburowcolors 1{tableheadcolor .. tableheadcolor}
+Headline \\
+\hline
+\taburowcolors 2{tablebodycolor .. tablerowcolor}
+Content \\
+\hline
+\end{tabu}
+\captionof{table}{My footnote\footnotemark is here. }
+\footnotetext{See also}
+
 \section{\glsOnlyHeadline{OpenCL}}
 
 	{\textbackslash}textualcite mit Seitenangabe: \textualcite[vgl.][60]{martin2009clean}

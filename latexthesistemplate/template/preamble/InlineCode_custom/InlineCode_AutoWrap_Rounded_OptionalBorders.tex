@@ -10,49 +10,59 @@
 %\usepackage{tikz}
 \usepackage{soul}
 \usetikzlibrary{calc}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{fit}
+
 
 \definecolor{veryDarkGray}{rgb}{0.3,0.3,0.3}
 
 \makeatletter
-
+\newbox\mybox
+\newcount\test
+\test0
 \newcommand{\defhighlighter}[3][]{%
-  \tikzset{every highlighter/.style={color=#2, fill opacity=#3, #1}}%
+    \tikzset{every highlighter/.style={color=#2, fill opacity=#3, #1}}%
 }
 
-\defhighlighter[rounded corners =1mm]{veryDarkGray}{.15}
+\defhighlighter[font=\ttfamily]{veryDarkGray}{.15}
 
-\newcommand{\highlight@DoHighlight}{
-  \fill [outer sep = -15pt, inner sep = 0pt
-        , every highlighter, this highlighter ]
-        ($(begin highlight)+(0,8pt)$) rectangle ($(end highlight)+(0,-3pt)$) ;
+\newcommand{\highlight@DoHighlight}[1]{
+    \node[outer sep = -13pt, inner sep = 0pt,
+        fit=(begin highlight) (end highlight),
+        every highlighter, this highlighter,
+        rounded rectangle,#1,
+        fill
+    ]{} ;
 }
 
-\newcommand{\highlight@BeginHighlight}{
-  \coordinate (begin highlight) at (0,0) ;
+\newcommand{\highlight@BeginHighlight}[1]{
+  \coordinate[yshift=-\dp\mybox-1pt,#1] (begin highlight) at (0,0) ;
 }
 
-\newcommand{\highlight@EndHighlight}{
-  \coordinate (end highlight) at (0,0) ;
+\newcommand{\highlight@EndHighlight}[1]{
+  \coordinate[yshift=\ht\mybox+1pt,#1 ] (end highlight) at (0,0) ;
 }
 
 \newdimen\highlight@previous
 \newdimen\highlight@current
 
-\DeclareRobustCommand*\highlight[1][]{%
+\DeclareRobustCommand*\highlight[2][]{%
+  \setbox\mybox\hbox{#2}
   \tikzset{this highlighter/.style={#1}}%
   \SOUL@setup
   %
+  \gdef\ht@possiblenoleftround{}
   \def\SOUL@preamble{%
     \begin{tikzpicture}[overlay, remember picture]
-      \highlight@BeginHighlight
-      \highlight@EndHighlight
+      \highlight@BeginHighlight{xshift=3pt}
+      \highlight@EndHighlight{xshift=-3pt}
     \end{tikzpicture}%
   }%
   %
   \def\SOUL@postamble{%
     \begin{tikzpicture}[overlay, remember picture]
-      \highlight@EndHighlight
-      \highlight@DoHighlight
+      \highlight@EndHighlight{xshift=-3pt}
+      \expandafter\highlight@DoHighlight\expandafter{\ht@possiblenoleftround}
     \end{tikzpicture}%
   }%
   %
@@ -60,7 +70,7 @@
     \discretionary{%
       \SOUL@setkern\SOUL@hyphkern
       \SOUL@sethyphenchar
-      \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+      \tikz[overlay, remember picture] \highlight@EndHighlight{} ;%
     }{%
     }{%
       \SOUL@setkern\SOUL@charkern
@@ -71,7 +81,7 @@
     \SOUL@setkern\SOUL@hyphkern
     \hbox{##1}%
     \discretionary{%
-      \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+      \tikz[overlay, remember picture] \highlight@EndHighlight{} ;%
     }{%
     }{%
       \SOUL@setkern\SOUL@charkern
@@ -85,15 +95,15 @@
         \global\highlight@current =\y1
       \endpgfextra (0,0) ;
       \ifdim\highlight@current < \highlight@previous
-        \highlight@DoHighlight
-        \highlight@BeginHighlight
+        \expandafter\highlight@DoHighlight\expandafter{\ht@possiblenoleftround,rounded rectangle right arc=none}
+        \gdef\ht@possiblenoleftround{rounded rectangle left arc=none}
+        \highlight@BeginHighlight{}
       \fi
     \end{tikzpicture}%
     \ttfamily \the\SOUL@syllable
-    \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+    \tikz[overlay, remember picture] \highlight@EndHighlight{} ;%
   }%
-  \SOUL@
+  \SOUL@{#2}
 }
-\makeatother
 
 \newcommand{\inlinecodeWrap}[1]{\highlight{\small\ttfamily#1}}
