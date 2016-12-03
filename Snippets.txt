@@ -1,0 +1,55 @@
+==== Nutzung ====
+!!! .gitignore zum Ausschließen von geschützten/geheimen Inhalten (Unterschrift, ...) !!!
+
+Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus der Vorlage sind nicht zu kopieren:
+	- template/doc
+
+# fester Eintrag im TOC ohne Seitenzahl
+\addcontentslineWithoutPagenumber{chapter}{Titel, der im TOC erscheint}		
+	
+# Anpassen der Abstände vor/nach Kapitel- und Abschnittsüberschriften
+\RedeclareSectionCommands in style.tex anpassen
+
+# numerischer Zitatstil
+- in packages.tex: style=numeric-comp bei biblatex
+- für eckige Klammern im Quellenverzeichnis: vor begin{document}: \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
+- vor begin{document} die Kommentare für den Code von \textualcite entfernen
+- Einträge im Quellenverzeichnis nicht sortieren (=> Reihenfolge des Vorkommens im Text wird erhalten): sort=none
+
+# nur Bild um 90° drehen
+- Parameter angle bei includegraphics ergänzen, Breite ggf. anpassen: \includegraphics[width=\textheight, angle=90]{Img.pdf}
+
+# Bild und Beschriftung um 90° drehen
+\usepackage{rotating}
+
+\begin{sidewaysfigure}
+	\includegraphics[width=\textheight]{Img.pdf}
+\end{sidewaysfigure}
+
+
+# Druck
+- Unterschrift entfernen
+- Linkfarbe: in LaTeXTemplate.tex
+		- \UseDefinition{Target}{Print} statt\UseDefinition{Target}{Web}
+
+# Hinweise
+- titlesec wird in der neuen Version nicht mehr benutzt
+	
+# Akronyme im Plural
+\newacronym[longplural={Pluralform}]{KEY}{KEY}{Singularform}
+\glspl	
+
+# Anhang mit ausschließlich virtuellen Einträgen
+- Kommentare vor Code beginnend mit "\BeforeClosingMainAux" in LaTeXTemplate_custom_before_document.tex entfernen
+- \input{content/Z-Appendix.tex} in LaTeXTemplate.tex deaktivieren
+- virtuelle Einträge in content/Z-Appendix.tex festlegen
+
+# Fußnote in caption/captionof
+- möglichst vermeiden
+- fehleranfällige Lösung, weil sichergestellt werden muss, dass sich 
+  \footnotetext auf derselben Seite wie caption/captionof befinden muss
+\begin{tabu} ... \end{tabu}
+\captionof{table}{My footnote\footnotemark is here. }
+\footnotetext{Content of footnote}
+
+- alternative Lösungen: http://tex.stackexchange.com/questions/29916/how-to-place-a-footnote-inside-a-float-environment

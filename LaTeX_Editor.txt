@@ -1,0 +1,18 @@
+==== Anforderungen an Editor ====
+- Rechtschreibprüfung
+- Code-Vervollständigung
+- Vorschau, ohne komplettes Dokument zu kompilieren
+- Strukturansicht
+- Masterdateien (bei Kompilieren einer Inhaltsdatei wird Masterdatei automatisch mitkompiliert)
+	
+# Auswahl
+https://sourceforge.net/projects/texstudio/#screenshots
+https://www.gnu.org/software/auctex/screenshots.html
+
+https://atom.io/packages/latex
+https://atom.io/packages/latex-plus
+https://atom.io/packages/latextools
+
+http://www.sublimetext.com/2
+http://www.latexing.com/features.html
+https://github.com/SublimeText/LaTeXTools

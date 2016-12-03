@@ -1,0 +1,21 @@
+==== TODO ====
+- Template-Doku Teil III lesen
+	
+# Nice-to-have
+- alphabetischer Zitatstil
+	- Problem: kein Jahr und/oder Autor vorhanden
+	- Präfix vor die eckigen Klammern
+- zuverlässiger Zeilenumbruch in \ttfamily
+- inlinecodeWrap verbessern: Im Falle eines Zeilenumbruchs Pfeil-Symbol (\hookarrowleft) als hyphenchar anzeigen,
+  das Umbruch symbolisiert. 
+- Konfigurationsdatei: Variablen setzen, die in den anderen Dateien
+abgefragt werden, z. B.: MyCite=numeric oder Appendix=VirtualOnly
+	
+==== nicht aus alter Vorlage übernommen ====	
+style.tex
+	- bibliography=oldstyle
+	- \usetocstyle{standard}
+LaTeXTemplate.tex
+	- scrreprt als documentclass
+\addtocontents{toc}{\protect\thispagestyle{empty}} auf 1. Seite des Hauptteils	
+	

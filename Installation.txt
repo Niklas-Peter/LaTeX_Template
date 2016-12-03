@@ -1,0 +1,36 @@
+==== Software ====
+- Windows 10 (x64)
+- TeXworks
+- texlive2016-20160523.iso
+	- nach Installation alle Pakete aktualisieren
+	
+- eigene Skripte
+	- DeleteAuxFiles.bat
+	- Build.bat
+
+==== TeXworks ====
+- Verarbeitungsprogramme hinzufügen: wie unter "Kompilation" beschrieben Biber und MakeGlossaries hinzufügen
+	- die Variablen werden von TeXworks bereitgestellt
+
+==== Kompilation ====
+Die im Folgenden verwendeten Variablen wie folgt ersetzen:
+        - $basename=LaTeXTemplate
+        - $fullname=LaTeXTemplate.tex
+
+0. auf der Kommandozeile in das Verzeichnis "LaTeX_Ausarbeitung" wechseln
+1. pdflatex $fullname 
+        - findet im Dokument verwendete Quellen und Abkürzungen und speichert 
+        sie in Dateien, die als Eingabe für die nächsten Schritte dienen 
+2. biber $basename
+        - ermittelt Angaben für das Quellenverzeichnis 
+3. makeglossaries $basename
+        - ermittelt Angaben für das Abkürzungsverzeichnis 
+4. pdflatex $fullname
+        - erzeugt vollständiges Dokument mit Quellen- und Abkürzungsverzeichnis
+5. pdflatex $fullname
+        - aktualisiert u. a. Inhaltsverzeichnis aufgrund der 
+        Änderungen im vorigen Schritt	
+
+==== Troubleshooting ====
+- Problem: Visio fügt beim PDF-Export einen Rahmen um das Dokument herum ein
+	- Lösung: Visio - F12 - PDF - Options - "Document structure tags for accessibility" deaktivieren
