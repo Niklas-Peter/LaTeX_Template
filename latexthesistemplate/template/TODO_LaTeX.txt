@@ -49,6 +49,16 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus 
 - vor begin{document} die Kommentare für den Code von \textualcite entfernen
 - Einträge im Quellenverzeichnis nicht sortieren (=> Reihenfolge des Vorkommens im Text wird erhalten): sort=none
 
+# nur Bild um 90° drehen
+- Parameter angle bei includegraphics ergänzen, Breite ggf. anpassen: \includegraphics[width=\textheight, angle=90]{Img.pdf}
+
+# Bild und Beschriftung um 90° drehen
+\usepackage{rotating}
+
+\begin{sidewaysfigure}
+	\includegraphics[width=\textheight]{Img.pdf}
+\end{sidewaysfigure}
+
 
 # Druck
 - Unterschrift entfernen
@@ -77,15 +87,15 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus 
 
 - alternative Lösungen: http://tex.stackexchange.com/questions/29916/how-to-place-a-footnote-inside-a-float-environment
 
+==== Troubleshooting ====
+- Problem: Visio fügt beim PDF-Export einen Rahmen um das Dokument herum ein
+	- Lösung: Visio - F12 - PDF - Options - "Document structure tags for accessibility" deaktivieren
+	
 ==== TODO ====
 - Template-Doku lesen
 - Tests erweitern für eigene Befehle
-- Visio Rahmen um PDF entfernen
 
 # Funktionen
-- Querformat (insb. für Bilder), 2 Varianten:
-	- für Bildschirmanzeige: Seite komplett im Querformat
-	- für den Druck / zum Binden: nur das Bild im Querformat, aber Seitenlayout weiterhin Hochformat
 - Befehle & Snippets zum Einbinden von Bildern, Tabellen, ... anlegen
 
 # 
