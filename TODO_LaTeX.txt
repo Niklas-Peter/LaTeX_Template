@@ -1,5 +1,25 @@
 ==== TODO ====
 - Template-Doku Teil III lesen
+
+https://tex.stackexchange.com/a/235312/61241
+
+\newenvironment{SamePage}{\noindent\begin{minipage}{\textwidth}}{\end{minipage}}
+	
+\DefineBibliographyStrings{ngerman}{%
+  mathesis = {Masterarbeit}
+}	
+
+- normale Hyphenation für Wörter mit "-" global?
+
+noabbrev für cleveref
+
+evtl. url=true für biblatex, um URL für alle Typen anzuzeigen
+	
+Unterschied, ob onehalfspacing in style.tex oder in before_document.tex	
+	
+- Leerzeichen in inlinecodeWrap?	
+	
+- Quellenverzeichnis: für alle Bib-Typen einheitlich mit/ohne Anführungszeichen?	
 	
 # Nice-to-have
 - alphabetischer Zitatstil
@@ -10,6 +30,7 @@
   das Umbruch symbolisiert. 
 - Konfigurationsdatei: Variablen setzen, die in den anderen Dateien
 abgefragt werden, z. B.: MyCite=numeric oder Appendix=VirtualOnly
+- alternative Caption für Listings	
 	
 ==== nicht aus alter Vorlage übernommen ====	
 style.tex

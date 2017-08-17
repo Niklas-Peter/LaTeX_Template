@@ -6,9 +6,9 @@
 % OVERWRITES BEGIN: style.tex
 %%% Remove Space above and below Chapter.
 %% Space above Chapter Title
-\renewcommand*{\chapterheadstartvskip}{\vspace{1\baselineskip}}
+\renewcommand*{\chapterheadstartvskip}{\vspace{0.1\baselineskip}}
 %% Space below Chapter Title
-\renewcommand*{\chapterheadendvskip}{\vspace{0.7\baselineskip}}%
+\renewcommand*{\chapterheadendvskip}{\vspace{0.4\baselineskip}}%
 
 \IfDefined{chapter}{
    \KOMAoptions{%
@@ -22,3 +22,7 @@
    listof=totoc, % add Lists to TOC without number
 }%   
 % OVERWRITES END: style.tex
+
+\DefineBibliographyStrings{ngerman}{%
+  mathesis = {Masterarbeit}
+}

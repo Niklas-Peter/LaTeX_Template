@@ -433,7 +433,7 @@
 % loading: must be loaded after hyperref and after varioref
 \ExecuteAfterPackage{hyperref}{
 % caption and cleveref incompatible in Versions before 2011/12/24
-  \usepackage{cleveref}[2011/12/24]
+  \usepackage[noabbrev]{cleveref}[2011/12/24]
 }
 
 % Description: Extension of the xr package for
@@ -490,7 +490,7 @@
 % Incompatible: ucs and every previous bibtex package
 \usepackage[
 % CUSTOM BEGIN
-  style=numeric-comp, % Loads the bibliography and the citation style
+  style=numeric, % Loads the bibliography and the citation style
 % CUSTOM END
   % bibstyle=alphabetic, % load a bibliography style
   % citestyle=alphabetic, % load a citatio style

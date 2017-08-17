@@ -4,6 +4,10 @@
 Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus der Vorlage sind nicht zu kopieren:
 	- template/doc
 
+
+# für Rechtschreibprüfung kompilieren
+- in LaTeXTemplate.tex und LaTeXTemplate_custom_before_document.tex die mit der Beschreibung "spell check" kommentierten Stellen aktivieren
+	
 # fester Eintrag im TOC ohne Seitenzahl
 \addcontentslineWithoutPagenumber{chapter}{Titel, der im TOC erscheint}		
 	
@@ -26,12 +30,17 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus d
 	\includegraphics[width=\textheight]{Img.pdf}
 \end{sidewaysfigure}
 
+# Quellenangabe in \blockquote: \blockquote[{\cite{mysource}}]{...}
+- wichtig sind die "{}" um den Zitatbefehl herum
+
+# Quellenangabe der Form "Seiten 12 f.": [12 \psq]
 
 # Druck
 - Unterschrift entfernen
 - Linkfarbe: in LaTeXTemplate.tex
 		- \UseDefinition{Target}{Print} statt\UseDefinition{Target}{Web}
-
+- Warnungen zu overfull/underfull hboxes in LaTeX-Ausgabe prüfen (Text, der über Rand hinausragt, ...)
+		
 # Hinweise
 - titlesec wird in der neuen Version nicht mehr benutzt
 	
@@ -44,6 +53,12 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus d
 - \input{content/Z-Appendix.tex} in LaTeXTemplate.tex deaktivieren
 - virtuelle Einträge in content/Z-Appendix.tex festlegen
 
+# für Wort, das bereits Bindestricht enthält, trotzdem Hyphenation erlauben (standardmäßig erlaubt LaTeX keine Hyphenation für solche Wörter außer am Bindestrich selbst): Unicast\hyp{}Nachrichtentyp => kann in Unicast-Nachrichtenyp (Standard), aber auch in Unicast-Nachrichten-typ getrennt werden
+
+# Codelisting: \lstinputlisting[caption={[Kurzbeschriftung für Listings-Verzeichnis]Langbeschriftung}, label={lst:},linerange={63-67,73-93},escapeinside={@}{@}]{../../Programme/VectorAddition/vadd.c}
+
+# geschützter Bindestrich mit \nobreakdash: Fehlererkennung und \nobreakdash-analyse
+
 # Fußnote in caption/captionof
 - möglichst vermeiden
 - fehleranfällige Lösung, weil sichergestellt werden muss, dass sich 
@@ -53,3 +68,7 @@ Für konkrete Hausarbeiten den Ordner "template" kopieren. Folgende Inhalte aus d
 \footnotetext{Content of footnote}
 
 - alternative Lösungen: http://tex.stackexchange.com/questions/29916/how-to-place-a-footnote-inside-a-float-environment
+
+==== Troubleshooting ====
+Problem: Visio fügt beim PDF-Export einen Rahmen um das Dokument herum ein
+	- Lösung: Visio - F12 - PDF - Options - "Document structure tags for accessibility" deaktivieren

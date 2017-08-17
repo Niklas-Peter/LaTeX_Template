@@ -2,11 +2,11 @@
 - Windows 10 (x64)
 - TeXworks
 - texlive2016-20160523.iso
-	- nach Installation alle Pakete aktualisieren
+	- nach der Installation unbedingt alle Pakete aktualisieren
 	
-- eigene Skripte
-	- DeleteAuxFiles.bat
-	- Build.bat
+==== eigene Skripte ====
+- DeleteAuxFiles.bat: Löschen von Hilfsdateien, die LaTeX generiert
+- Build.bat: die unten im Abschnitt Kompilation genannten Schritte ausführen
 
 ==== TeXworks ====
 - Verarbeitungsprogramme hinzufügen: wie unter "Kompilation" beschrieben Biber und MakeGlossaries hinzufügen
@@ -30,7 +30,5 @@ Die im Folgenden verwendeten Variablen wie folgt ersetzen:
 5. pdflatex $fullname
         - aktualisiert u. a. Inhaltsverzeichnis aufgrund der 
         Änderungen im vorigen Schritt	
-
-==== Troubleshooting ====
-- Problem: Visio fügt beim PDF-Export einen Rahmen um das Dokument herum ein
-	- Lösung: Visio - F12 - PDF - Options - "Document structure tags for accessibility" deaktivieren
+6. ggf.: pdflatex $fullname
+		- Einrückungen im Inhaltsverzeichnis korrigieren

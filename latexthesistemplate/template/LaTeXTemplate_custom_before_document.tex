@@ -1,7 +1,8 @@
 % CUSTOM BEGIN
 
 % Date to print on the document.
-\newcommand{\npHandoverDate}{10.03.2017}
+\newcommand{\npHandoverDate}{31.07.2018}
+\newcommand{\npHandoverLocation}{Bad Hersfeld}
 
 % If you use this command as usual after \appendix it only works only, if there is another "real" appendix, that means an appendix not created using a \addtocontents command.  If there is no real appendix, you must include this command in a \BeforeClosingMainAux (see below)
 % Parameter 1: Type of entry to add, either chapter or part
@@ -29,7 +30,7 @@
 
 \usepackage{blindtext}
 
-\input{preamble/InlineCode_custom/InlineCode_AutoWrap_Rounded_OptionalBorders}
+\input{preamble/InlineCode_custom/InlineCode_AutoWrap_NoBorders}
 \input{preamble/InlineCode_custom/InlineCode_NoWrap_Rounded}
 
 % for all languages
@@ -129,7 +130,7 @@
 	\textualcite[#1][#2]{#3}
 }
 {
-	\cite[#1][#2]{#3}
+	\Cite[#1][#2]{#3}
 }
 }
 
@@ -164,20 +165,41 @@
 %\renewcommand{\inlinecodeWrap}[1]{}
 %\renewcommand{\inlinecodeNoWrap}[1]{}
 %\DeclareCiteCommand{\textualcite}{}{Quelle}{}{}
-%\DeclareDocumentCommand{\MyCite}{ O{default1} O{default2} m }{Quelle}
+%\DeclareDocumentCommand{\MyCite}{O{default1} O{default2} m}{Quelle}
 %\renewcommand{\Cref}[1]{Abschnitt 1}
 %\renewcommand{\footnote}{}
-%\DeclareDocumentCommand{\cite}{ O{} O{} m }{Quelle}
+%\DeclareDocumentCommand{\cite}{O{} O{} m}{Quelle}
 %\IfElseDefined{chapter}{
 %   \ohead[]{} % header : nothing
 %   \ihead[]{} 
 %   \ofoot[]{} 	% footer: nothing
 %   \setheadsepline{0pt}[] % disables the line below the header
 %} {}
-% disable hyphenation
+%% disable hyphenation
 %\tolerance=1
 %\emergencystretch=\maxdimen
 %\hyphenpenalty=10000
 %\hbadness=10000
 %\raggedright % set left aligned instead of justified
 % CUSTOM END
+
+% Checkmark and cross symbol
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\newenvironment{SamePage}{\noindent\begin{minipage}{\textwidth}}{\end{minipage}}
+
+\usepackage{stmaryrd}
+
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+
+% Break at dots inside a word, e.g. in \gloss{kernel.Load}
+\ExplSyntaxOn
+\NewDocumentCommand{\gloss}{m}
+ {
+  \tl_set:Nn \l_tmpa_tl { #1 }
+  \tl_replace_all:Nnn \l_tmpa_tl { . } { .\discretionary{}{}{} }
+  `\tl_use:N \l_tmpa_tl'
+ }
+\ExplSyntaxOff

@@ -1,0 +1,9 @@
+% Wraps the text inside \inlinecode if it overflows the line.
+% No borders at all and no rounded corners.
+
+%\input{ttfamily_WordWrap}
+
+\usepackage{soul}
+
+\definecolor{veryLightGray}{rgb}{0.92,0.92,0.92}
+\DeclareRobustCommand{\inlinecodeWrap}[1]{{\sethlcolor{veryLightGray}\hl{\small\ttfamily#1}}}
